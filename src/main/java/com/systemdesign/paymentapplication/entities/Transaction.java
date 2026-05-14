@@ -1,6 +1,7 @@
 package com.systemdesign.paymentapplication.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.apache.catalina.User;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,6 +11,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "transactions")
+@Data
 public class Transaction {
 
     @Id
