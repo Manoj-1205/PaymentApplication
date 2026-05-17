@@ -1,10 +1,12 @@
 package com.systemdesign.paymentapplication.services.strategies;
 
+import com.systemdesign.paymentapplication.dtos.PaymentRequest;
+
 import java.math.BigDecimal;
 
 public interface PaymentStrategy {
-    String payment(BigDecimal amount);
+    String payment(PaymentRequest request);
     String getType();
-    boolean validate();
+    boolean validate(PaymentRequest request);
 
 }

@@ -1,13 +1,19 @@
 package com.systemdesign.paymentapplication.services.strategies;
 
+import com.systemdesign.paymentapplication.dtos.PaymentRequest;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 @Component
 public class UPIStrategy implements PaymentStrategy{
 
     @Override
-    public String payment(java.math.BigDecimal amount) {
-        return "UPI payment of amount: " + amount + " processed successfully.";
+    public String payment(PaymentRequest request) {
+        if(!validate(request)){
+            return "Invalid UPI payment request.";
+        }
+        return "UPI payment of amount: " + request.getAmount() + " processed successfully.";
     }
 
     @Override
@@ -16,8 +22,11 @@ public class UPIStrategy implements PaymentStrategy{
     }
 
     @Override
-    public boolean validate() {
-        // Implement UPI validation logic here
+    public boolean validate(PaymentRequest request) {
+        Map<String, String> paymentDetails = request.getPaymentDetails();
+        if (paymentDetails.get("upiId") == null || paymentDetails.get("upiId").isEmpty()) {
+            return false;
+        }
         return true;
     }
 }

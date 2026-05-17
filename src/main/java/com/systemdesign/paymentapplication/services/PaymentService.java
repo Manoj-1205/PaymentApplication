@@ -79,6 +79,6 @@ public class PaymentService {
         String paymentMode = request.getPaymentMode();
         PaymentStrategy paymentStrategy = paymentFactory.getPaymentStrategy(paymentMode);
 
-        return paymentStrategy.payment(request.getAmount());
+        return paymentStrategy.payment(request);
     }
 }

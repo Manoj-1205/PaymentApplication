@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -16,6 +17,7 @@ public class PaymentRequest {
     private Long senderId;
     private Long receiverId;
     private BigDecimal amount;
+    private Map<String, String> paymentDetails;
     private String paymentMode;
 
 }
