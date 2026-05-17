@@ -16,5 +16,6 @@ public class PaymentRequest {
     private Long senderId;
     private Long receiverId;
     private BigDecimal amount;
+    private String paymentMode;
 
 }

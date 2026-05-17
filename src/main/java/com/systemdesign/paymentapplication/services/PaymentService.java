@@ -8,7 +8,10 @@ import com.systemdesign.paymentapplication.entities.Wallet;
 import com.systemdesign.paymentapplication.repositories.TransactionRepository;
 import com.systemdesign.paymentapplication.repositories.UserRepository;
 import com.systemdesign.paymentapplication.repositories.WalletRepository;
+import com.systemdesign.paymentapplication.services.strategies.PaymentFactory;
+import com.systemdesign.paymentapplication.services.strategies.PaymentStrategy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -18,17 +21,20 @@ public class PaymentService {
     private final UserRepository userRepository;
     private final WalletRepository walletRepository;
     private final TransactionRepository transactionRepository;
+    private final PaymentFactory paymentFactory;
 
     public PaymentService(
             UserRepository userRepository,
             WalletRepository walletRepository,
-            TransactionRepository transactionRepository) {
+            TransactionRepository transactionRepository, PaymentFactory paymentFactory) {
 
         this.userRepository = userRepository;
         this.walletRepository = walletRepository;
         this.transactionRepository = transactionRepository;
+        this.paymentFactory = paymentFactory;
     }
 
+    @Transactional
     public String transferMoney(PaymentRequest request) {
 
         UserEntity sender = userRepository.findById(request.getSenderId())
@@ -67,5 +73,12 @@ public class PaymentService {
         transactionRepository.save(transaction);
 
         return "Transaction Successful";
+    }
+
+    public String sendMoney(PaymentRequest request) {
+        String paymentMode = request.getPaymentMode();
+        PaymentStrategy paymentStrategy = paymentFactory.getPaymentStrategy(paymentMode);
+
+        return paymentStrategy.payment(request.getAmount());
     }
 }

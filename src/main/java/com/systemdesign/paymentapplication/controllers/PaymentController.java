@@ -23,6 +23,6 @@ public class PaymentController {
             @RequestBody PaymentRequest request) {
 
         return ResponseEntity.ok(
-                paymentService.transferMoney(request));
+                paymentService.sendMoney(request));
     }
 }
