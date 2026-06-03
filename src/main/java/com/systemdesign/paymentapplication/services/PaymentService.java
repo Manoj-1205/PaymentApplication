@@ -75,6 +75,7 @@ public class PaymentService {
         return "Transaction Successful";
     }
 
+    @Transactional
     public String sendMoney(PaymentRequest request) {
         String paymentMode = request.getPaymentMode();
         PaymentStrategy paymentStrategy = paymentFactory.getPaymentStrategy(paymentMode);
